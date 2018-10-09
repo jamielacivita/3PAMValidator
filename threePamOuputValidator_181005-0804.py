@@ -11,21 +11,16 @@ import sys
 
 filename = sys.argv[1]  #Filename is expected to be the first argument on the commandline.
 
-def checkColumn(checkColumn, expectedValue):
+def checkColumn(ws, checkColumn, expectedValue):
     """Given a column number and an expected value return true/false indicating if that value is present at column"""
     returnValue = False
     if ws.cell(row=1, column=checkColumn).value == expectedValue:
         returnValue = True
     return returnValue
 
-#def runTest(column, value):
-#    if checkColumn(column,value):
-#        print("Column " + str(column) + " is correct.")
-#    else:
-#        print("Column " + str(column) + " is not correct!  Expected " + value)
 
-def runTest(column, value):
-    if checkColumn(column,value):
+def runTest(ws, column, value):
+    if checkColumn(ws, column,value):
         print("Column " + numberToLetter(column) + " is correct.")
     else:
         print("Column " + numberToLetter(column) + " is not correct!  Expected " + value)
@@ -37,32 +32,45 @@ def numberToLetter(colNumber):
     ascii = colNumber + 64
     return chr(ascii)
 
-#load workbook
-print("Loading: " + filename)
-wb = load_workbook(filename)
 
-#activate sheet
-ws = wb.active
+def main():
+    #load workbook
+    print("Loading: " + filename)
+    wb = load_workbook(filename)
 
-runTest(1,"EntityID")
-runTest(2,"EntityName")
-runTest(3,"EntityCountry")
-runTest(4,"EntityCountryName")
-runTest(5,"EntityAliasName")
-runTest(6,"ParentEntityName")
-runTest(7,"SourcingCompanyName")
-runTest(8,"SourcingCompanyID")
-runTest(9,"EntityTechData")
-runTest(10,"EntitySPData")
-runTest(11,"EntityIPData")
-runTest(12,"ResourceID")
-runTest(13,"ResourceType")
-runTest(14,"ResourceName")
-runTest(15,"ResourceCountry")
-runTest(16,"ResourceDescription")
-runTest(17,"ResourceURL")
-runTest(18,"ResourceECCN")
-runTest(19,"ApprovedAccessOPCO")
-runTest(20,"ApprovedAccessApprovalDate")
-runTest(21,"ApprovedAccessSourceInfo")
+    #activate sheet
+    ws = wb.active
+
+    headerContents = {}
+    headerContents[1] = "EntityID"
+    headerContents[2] = "EntityName"
+    headerContents[3] = "EntityCountry"
+    headerContents[4] = "EntityCountryName"
+    headerContents[5] = "EntityAliasName"
+    headerContents[6] = "ParentEntityName"
+    headerContents[7] = "SourcingCompanyName"
+    headerContents[8] = "SourcingCompanyID"
+    headerContents[9] = "EntityTechData"
+    headerContents[10] = "EntitySPData"
+    headerContents[11] = "EntityIPData"
+    headerContents[12] = "ResourceID"
+    headerContents[13] = "ResourceType"
+    headerContents[14] = "ResourceName"
+    headerContents[15] = "ResourceCountry"
+    headerContents[16] = "ResourceDescription"
+    headerContents[17] = "ResourceURL"
+    headerContents[18] = "ResourceECCN"
+    headerContents[19] = "ApprovedAccessOPCO"
+    headerContents[20] = "ApprovedAccessApprovalDate"
+    headerContents[21] = "ApprovedAccessSourceInfo"
+
+
+    for c in range(1,22):
+        runTest(ws,c,headerContents[c])
+
+
+if (__name__ == "__main__"):
+    main()
+
+
 
