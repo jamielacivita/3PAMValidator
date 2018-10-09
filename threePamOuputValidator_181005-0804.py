@@ -36,7 +36,7 @@ def numberToLetter(colNumber):
 def main():
     #load workbook
     print("Loading: " + filename)
-    wb = load_workbook(filename)
+    wb = load_workbook(filename, read_only=True)    #We load read only here because we are not modifying data and it is CONSIDERABALLY faster. 
 
     #activate sheet
     ws = wb.active
